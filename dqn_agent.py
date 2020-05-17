@@ -9,12 +9,12 @@ import torch.nn.functional as F
 import torch.optim as optim
 
 #hyper_params
-LR = 5e-4
+LR = 0.0005
 BUFFER_SIZE = int(1e5)
 BATCH_SIZE = 64
 UPDATE_EVERY = 4
 GAMMA = 0.99
-TAU = 1e-3
+TAU = 0.001
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 

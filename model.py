@@ -21,8 +21,11 @@ class Qnetwork(nn.Module):
 		self.fc3 = nn.Linear(64, 64)
 		self.out = nn.Linear(64, action_size)
 
+		self.bn = nn.BatchNorm1d(num_features=64)
+
+
 	def forward(self, state):
-		x = F.relu(self.fc1(state))
-		x = F.relu(self.fc2(x))
-		x = F.relu(self.fc3(x))
+		x = F.relu(self.bn(self.fc1(state)))
+		x = F.relu(self.bn(self.fc2(x)))
+		x = F.relu(self.bn(self.fc3(x)))
 		return self.out(x)
