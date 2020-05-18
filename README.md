@@ -1,7 +1,7 @@
 # BananaPicker-Navigation
 We train an agent to manuver in a 3-D environment avoiding blue bananas and picking yellow ones as fast as possible. We do this by implementing Deep Q network based on this [research paper](https://www.nature.com/articles/nature14236). The agent works thorugh Agent class in [dqn_agent.py](https://github.com/ShivankYadav/BananaPicker-Navigation/blob/master/dqn_agent.py) and the model architecture is described in [model.py](https://github.com/ShivankYadav/BananaPicker-Navigation/blob/master/model.py).
 
-I have described my approach and the code in a more detailed manner in report.md
+I have described my approach and the code in a more detailed manner in [Report.pdf](https://github.com/ShivankYadav/BananaPicker-Navigation/blob/master/Report.pdf)
 
 ## Environment Details
 !["GIF"](https://github.com/ShivankYadav/BananaPicker-Navigation/blob/master/images/banana.gif)
