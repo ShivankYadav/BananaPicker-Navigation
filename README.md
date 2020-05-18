@@ -6,7 +6,7 @@ I have described my approach and the code in a more detailed manner in report.md
 ## Environment Details
 !["GIF"](https://github.com/ShivankYadav/BananaPicker-Navigation/blob/master/images/banana.gif)
 
-The environment is based on [Unity ML-agents.](https://github.com/Unity-Technologies/ml-agents)
+The project environment is similar to, but not identical to the **Banana Collector** environment on the [Unity ML-agents github page.](https://github.com/Unity-Technologies/ml-agents)
 
 A **reward** of +1 is provided for collecting a yellow banana, and a reward of -1 is provided for collecting a blue banana. Thus, the goal of your agent is to collect as many yellow bananas as possible while avoiding blue bananas.
 
