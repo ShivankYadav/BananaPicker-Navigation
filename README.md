@@ -23,7 +23,7 @@ The task is **episodic**, and in order to solve the environment, your agent must
   * ```pip install unityagents``` **Unity Machine Learning Agents (ML-Agents)** is an open-source Unity plugin that enables games and simulations to serve as environments for training intelligent agents. For game developers, these trained agents can be used for multiple purposes, including controlling NPC behavior (in a variety of settings such as multi-agent and adversarial), automated testing of game builds and evaluating different game design decisions pre-release.You can read more about ML-Agents by perusing the [GitHub repository](https://github.com/Unity-Technologies/ml-agents).
   * The user must install **pytorch** according to the specifications on his/her workspace. I used 
       torch                     1.4.0 and 
-      torchvision               0.4.2 corrosponding to CUDA 10.1
+      torchvision               0.4.2 corrosponding to CUDA 10.1. Although The code will also work on Non-CUDA versions of pytorch.
   * Other python modules like **numpy** and **matplotlib** should be installed.
  ## Downloading and setting up Environment
  For this project, you will not need to install Unity - this is because we are using pre-built environment, and you can download it from one of the links below. You need only select the environment that matches your operating system:
