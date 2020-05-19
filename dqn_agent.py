@@ -1,4 +1,5 @@
 import numpy as np
+import numpy as np
 import random
 from collections import namedtuple, deque
 
@@ -10,7 +11,7 @@ import torch.optim as optim
 
 BUFFER_SIZE = int(1e5)  # replay buffer size
 BATCH_SIZE = 64         # minibatch size 
-GAMMA = 0.99            # discount factor 
+GAMMA = 0.995           # discount factor
 TAU = 1e-3              # for soft update of target parameters
 LR = 5e-4               # learning rate 
 UPDATE_EVERY = 4        # how often to update the network
@@ -33,10 +34,9 @@ class Agent():
         self.action_size = action_size
         self.seed = random.seed(seed)
 
-		# init both target and local DQN networks and upload them to gpu if avialable
+        # Q-Network
         self.qnetwork_local = QNetwork(state_size, action_size, seed).to(device)
         self.qnetwork_target = QNetwork(state_size, action_size, seed).to(device)
-        # init optimizer
         self.optimizer = optim.Adam(self.qnetwork_local.parameters(), lr=LR)
 
         # Replay memory
@@ -65,13 +65,9 @@ class Agent():
             eps (float): epsilon, for epsilon-greedy action selection
         """
         state = torch.from_numpy(state).float().unsqueeze(0).to(device)
-        # put dropout and batchnorm in eval mode
         self.qnetwork_local.eval()
-        # pause history creation for autograd
         with torch.no_grad():
             action_values = self.qnetwork_local(state)
-
-        # switch back to training mode
         self.qnetwork_local.train()
 
         # Epsilon-greedy action selection
@@ -92,8 +88,8 @@ class Agent():
         # since max() returns 2 values. We want max value not index.
         # detach the targets from autograd history and convert them in vector form. ->(64,1)
         Q_targets_next = self.qnetwork_target(next_states).detach().max(1)[0].unsqueeze(1)
-
-        # apply bellman's equation.
+        
+        # Compute Q targets for current states by applying bellman's equations
         Q_targets = rewards + (gamma * Q_targets_next * (1 - dones))
 
         # get q values for corrosponding actions horizontally along the (64,4) action-value matrix output. Result->(64,1)
@@ -110,9 +106,7 @@ class Agent():
         
         # ------------------- update target network ------------------- #
         self.soft_update(self.qnetwork_local, self.qnetwork_target, TAU)    
-        
-        
-        
+
 
     def soft_update(self, local_model, target_model, tau):
         """Soft update model parameters.
@@ -140,10 +134,8 @@ class ReplayBuffer:
             seed (int): random seed
         """
         self.action_size = action_size
+        self.memory = deque(maxlen=buffer_size)  
         self.batch_size = batch_size
-		# init memory
-		self.memory = deque(maxlen=buffer_size)  
-        # init experience tuple
         self.experience = namedtuple("Experience", field_names=["state", "action", "reward", "next_state", "done"])
         self.seed = random.seed(seed)
     
@@ -156,8 +148,8 @@ class ReplayBuffer:
         """Randomly sample a batch of experiences from memory."""
         experiences = random.sample(self.memory, k=self.batch_size)
         
-		# np.vstack converts single dim [] to vector if dim x 1.
-		# seperate the data, convert it to torch tensor and upload it to device before returning
+        # np.vstack converts single dim [] to vector if dim x 1.
+        # seperate the data, convert it to torch tensor and upload it to device before returning
         states = torch.from_numpy(np.vstack([e.state for e in experiences if e is not None])).float().to(device)
         actions = torch.from_numpy(np.vstack([e.action for e in experiences if e is not None])).long().to(device)
         rewards = torch.from_numpy(np.vstack([e.reward for e in experiences if e is not None])).float().to(device)
